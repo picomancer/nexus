@@ -105,7 +105,12 @@ class NexusModule(object):
         return self.get_title()
 
     def get_urls(self):
-        from django.conf.urls.defaults import patterns
+        try:
+            from django.conf.urls import patterns
+        except ImportError:
+            # django.conf.urls.defaults deprecated in django 1.4, removed in django 1.6
+            # this try/except can be removed when nexus drops support for django 1.3
+            from django.conf.urls.defaults import patterns
 
         return patterns('')
 
